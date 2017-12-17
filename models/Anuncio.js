@@ -7,16 +7,17 @@ const anuncioSchema = mongoose.Schema({
     venta: Boolean,
     precio: Number,
     foto: String,
-    tags: [String]
+    tags: { type: String, enum:['work', 'lifestyle', 'motor', 'mobile'] }
 
 });
 
-anuncioSchema.statics.list = function(filters, limit, skip, sort, fields) {
-    const query = Anuncio.find(filters);
+anuncioSchema.statics.list = function(filter, limit, skip, sort, fields) {
+    const query = Anuncio.find(filter);
     query.limit(limit);
     query.skip(skip);
     query.sort(sort);
     query.select(fields);
+    
 
     return query.exec();
 }
